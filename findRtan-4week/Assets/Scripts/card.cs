@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum WhosCard
+{
+    Seungjun,
+    Geon_o,
+    Geonhyeong,
+    Jiyoon,
+    Ingyu
+}
+
 public class card : MonoBehaviour
 {
     Animator anim;
@@ -13,6 +23,8 @@ public class card : MonoBehaviour
     bool isOpened = false;
     [SerializeField] Color notOpenColor = Color.white;
     [SerializeField] Color OpenedColor;
+
+    public WhosCard WhosCard { get; private set; }
 
     private void Start()
     {
