@@ -420,7 +420,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4542451fc2fd2d4bad5ad19392a2e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flip: {fileID: 8300000, guid: 516c9954831ed6146847e104f0adb43d, type: 3}
+  flip: {fileID: 8300000, guid: 59579549fdd01e848ba0acfc89d817a7, type: 3}
+  reFlip: {fileID: 8300000, guid: 2c2be72a4e88f9446a87a6d399c2df5f, type: 3}
   notOpenColor: {r: 1, g: 1, b: 1, a: 1}
   OpenedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
 --- !u!114 &-1594584760109858139

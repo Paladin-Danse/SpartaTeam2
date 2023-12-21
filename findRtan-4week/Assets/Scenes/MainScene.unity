@@ -166,7 +166,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -458,7 +458,12 @@ MonoBehaviour:
   timeTxt: {fileID: 2067484171}
   endTxt: {fileID: 1454222426}
   card: {fileID: 8157303318716750579, guid: b9692221d25d19a4c97d259ec52ab840, type: 3}
-  match: {fileID: 8300000, guid: 329068ff9722f42438afa07f5d64a254, type: 3}
+  start: {fileID: 8300000, guid: 7d636fd6e4375e24cbe3878b0ccb3bae, type: 3}
+  match: {fileID: 8300000, guid: 33713d31432863a4c8816d57af275124, type: 3}
+  missmatch: {fileID: 8300000, guid: 4a2e4f5f8e8237e4390c43a4b6cb519d, type: 3}
+  win: {fileID: 8300000, guid: 5c12cedc9649db349b5476ccb941757e, type: 3}
+  lose: {fileID: 8300000, guid: f0801a5289404684a8322e8f0cae34a2, type: 3}
+  audioManager: {fileID: 260856517}
 --- !u!4 &711337926
 Transform:
   m_ObjectHideFlags: 0
