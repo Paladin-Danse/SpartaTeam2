@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\endTxt.cs" />
     <Compile Include="Assets\Scripts\card.cs" />
     <Compile Include="Assets\Scripts\startBtn.cs" />
+    <Compile Include="Assets\Scripts\JiYun\CardFlipNotice.cs" />
     <Compile Include="Assets\Samples\Advertisement Legacy\4.4.2\UnityAds Example App\Scripts\UnityAdsExampleUI.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Samples\Advertisement Legacy\4.4.2\UnityAds Example App\Scripts\UnityAdsManager.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using static GameManager;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text endTxt;
     [SerializeField] GameObject card;
     [SerializeField] AudioClip match;
+    [SerializeField] CardFlipNotice cardFlipNotice;    
+
     AudioSource audioSource;
     GameObject firstCard = null;
     GameObject secondCard = null;
@@ -49,11 +52,15 @@ public class GameManager : MonoBehaviour
 
     public void isMatched()
     {
+        bool isMatched = false;
+
         string firstCardImage = firstCard.transform.Find("front").GetComponent<SpriteRenderer>().sprite.name;
         string secondCardImage = secondCard.transform.Find("front").GetComponent<SpriteRenderer>().sprite.name;
 
         if(firstCardImage == secondCardImage)
         {
+            isMatched = true;
+
             audioSource.PlayOneShot(match);
 
             firstCard.GetComponent<card>().destroyCard();
@@ -73,6 +80,7 @@ public class GameManager : MonoBehaviour
             firstCard.GetComponent<card>().closeCard();
             secondCard.GetComponent<card>().closeCard();
         }
+        cardFlipNotice.MatchCheck(isMatched, firstCard.GetComponent<card>().WhosCard);
         firstCard = secondCard = null;
     }
     //firstCard에 값이 들어있는가? = 첫번째카드를 집은 상태냐?
@@ -85,6 +93,7 @@ public class GameManager : MonoBehaviour
     public void setFirst(GameObject obj)
     {
         firstCard = obj;
+        cardFlipNotice.ResetText();
     }
     //위와 동일하게 두번째카드 체크
     public bool checkSecond()
@@ -113,15 +122,16 @@ public class GameManager : MonoBehaviour
         {
             GameObject newCard = Instantiate(card);
             newCard.transform.parent = cards.transform;
+            newCard.GetComponent<card>().Setup(rtans[i]);
 
             float x = (i / 4) * 1.4f - 2.1f;
             float y = (i % 4) * 1.4f - 3.0f;
             newCard.transform.position = new Vector3(x, y, 0);
             //newCard.transform.position = new Vector3(1.4f * (i % 4), -1.4f * (i / 4), 0);
 
-            string rtanName = "rtan" + rtans[i].ToString();
-            newCard.transform.Find("front").GetComponent<SpriteRenderer>().sprite
-                = Resources.Load<Sprite>(rtanName);
+            //string rtanName = "rtan" + rtans[i].ToString();
+            //newCard.transform.Find("front").GetComponent<SpriteRenderer>().sprite
+            //    = Resources.Load<Sprite>(rtanName);
         }
         cardsLeft = cards.transform.childCount;
     }

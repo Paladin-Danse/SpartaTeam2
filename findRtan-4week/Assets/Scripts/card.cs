@@ -1,14 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WhosCard
+{
+    Seungjun,
+    Geon_o,
+    Geonhyeong,
+    Jiyoon,
+    Ingyu
+}
+
 public class card : MonoBehaviour
 {
+    public WhosCard WhosCard { get; private set; }
+
     Animator anim;
     GameObject front;
     GameObject back;
     AudioSource audioSource;
+    SpriteRenderer spriteRenderer;
     [SerializeField] AudioClip flip;
+    [SerializeField] Sprite[] sprites;
     bool isOpened = false;
     [SerializeField] Color notOpenColor = Color.white;
     [SerializeField] Color OpenedColor;
@@ -19,10 +33,40 @@ public class card : MonoBehaviour
         front = transform.Find("front").gameObject;
         back = transform.Find("back").gameObject;
         back.GetComponent<SpriteRenderer>().color = notOpenColor;
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();        
 
         isOpened = false;
     }
+
+    public void Setup(int index)
+    {
+        spriteRenderer = transform.Find("front").GetComponent<SpriteRenderer>();
+        switch (index)
+        {
+            case 0:
+            case 1:
+                WhosCard = WhosCard.Seungjun;                
+                break;
+            case 2:
+            case 3:
+                WhosCard = WhosCard.Geon_o;
+                break;
+            case 4:
+            case 5:
+                WhosCard = WhosCard.Geonhyeong;
+                break;
+            case 6:
+                WhosCard = WhosCard.Jiyoon;
+                break;
+            case 7:
+                WhosCard = WhosCard.Ingyu;
+                break;
+        }
+        spriteRenderer.sprite = sprites[index];
+
+        Debug.Log(index);
+    }
+
     public void openCard()
     {
         audioSource.PlayOneShot(flip);
