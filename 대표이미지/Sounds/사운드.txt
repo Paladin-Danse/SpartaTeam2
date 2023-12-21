@@ -1,8 +1,17 @@
-SFX_Pop_Bubble_Single_1 카드 뒤집을 때
-SFX_Pop_Bubble_Single_3 카드 다시 뒤집힐 때
-SFX_Cash_Register_Buy_Click_1 성공했을 때 
-SFX_Confetti_Explosion_1 실패했을 때 
-SFX_Chest_Open_Rich_1 게임 완료했을 때
+SFX_Pop_Bubble_Single_1 카드 뒤집을 때 card.cs
+SFX_Pop_Bubble_Single_3 카드 다시 뒤집힐 때 card.cs
+SFX_Cash_Register_Buy_Click_1 성공했을 때 GameManager.cs
+SFX_Confetti_Explosion_1 실패했을 때 GameManager.cs
+SFX_Chest_Open_Rich_1 게임 완료했을 때 GameManager.cs
+
+
+게임 시작이랑 실패할때도 GameManager.cs
+
 
 
 클릭할 때(카드 뒤집을 때), 시작할 때, 진행 중일 때 성공, 실패 소리 넣어보기
+
+패배했을때 update에 Gameend 구문 들어가있어서 오류 개많이남 > 불리언하나 쥐어줘서 한번 재생한 후 false되서 안틀어지게함
+
+배경음 끄는건 public으로 참조해서 false해서 꺼버림
+
