@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 
             GameEnd();
         }
-        
+
     }
 
     public void isMatched()
@@ -59,16 +59,16 @@ public class GameManager : MonoBehaviour
         string firstCardImage = firstCard.transform.Find("front").GetComponent<SpriteRenderer>().sprite.name;
         string secondCardImage = secondCard.transform.Find("front").GetComponent<SpriteRenderer>().sprite.name;
 
-        if(firstCardImage == secondCardImage)
+        if (firstCardImage == secondCardImage)
         {
             audioSource.PlayOneShot(match,0.5f);
 
             firstCard.GetComponent<card>().destroyCard();
             secondCard.GetComponent<card>().destroyCard();
-            
+
             //카드가 사라지기까지 1초의 시간이 걸린다. 또한 두 장만 남았어도 뒤집기 전까진 끝난게 아니다.
             //그러므로 카드가 뒤집어져 확정이 난 순간 카드는 두장이 남아있다.
-            if(cardsLeft == 2)
+            if (cardsLeft == 2)
             {
                 Time.timeScale = 0;
                 audioSource.PlayOneShot(win, 0.5f);
