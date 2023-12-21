@@ -32,8 +32,19 @@ public class GameManager : MonoBehaviour
     {
         time += Time.deltaTime;
         timeTxt.text = time.ToString("N2");
+        if (time >= 20.0f)
+        {
+            time20();
+        }
+
+
+
         if (time >= 30.0f)
+        {
+
             GameEnd();
+        }
+        
     }
 
     public void isMatched()
@@ -113,5 +124,13 @@ public class GameManager : MonoBehaviour
                 = Resources.Load<Sprite>(rtanName);
         }
         cardsLeft = cards.transform.childCount;
+    }
+    public void time20()
+    {
+
+        timeTxt.text = "<color=#FF4C33>" + timeTxt.text + "</color>";
+
+
+
     }
 }
