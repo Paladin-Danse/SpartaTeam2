@@ -9,6 +9,7 @@ public class card : MonoBehaviour
     GameObject back;
     AudioSource audioSource;
     [SerializeField] AudioClip flip;
+    [SerializeField] AudioClip reFlip;
     bool isOpened = false;
     [SerializeField] Color notOpenColor = Color.white;
     [SerializeField] Color OpenedColor;
@@ -69,5 +70,6 @@ public class card : MonoBehaviour
         anim.SetBool("isOpen", false);
         transform.Find("back").gameObject.SetActive(true);
         transform.Find("front").gameObject.SetActive(false);
+        audioSource.PlayOneShot(reFlip, 0.5f);
     }
 }

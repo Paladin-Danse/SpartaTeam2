@@ -10,11 +10,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text timeTxt;
     [SerializeField] Text endTxt;
     [SerializeField] GameObject card;
+    [SerializeField] AudioClip start;
     [SerializeField] AudioClip match;
+    [SerializeField] AudioClip missmatch;
+    [SerializeField] AudioClip win;
+    [SerializeField] AudioClip lose;
     AudioSource audioSource;
+    public AudioManager audioManager;
     GameObject firstCard = null;
     GameObject secondCard = null;
     GameObject cards;
+    bool hasplayed = true;
     float time;
     int cardsLeft;//'실제로' 남아있는 카드
     private void Awake()
@@ -25,6 +31,7 @@ public class GameManager : MonoBehaviour
     {
         cards = GameObject.Find("cards");
         audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(start, 0.5f);
         InitGame();
     }
 
@@ -54,7 +61,7 @@ public class GameManager : MonoBehaviour
 
         if(firstCardImage == secondCardImage)
         {
-            audioSource.PlayOneShot(match);
+            audioSource.PlayOneShot(match,0.5f);
 
             firstCard.GetComponent<card>().destroyCard();
             secondCard.GetComponent<card>().destroyCard();
@@ -64,12 +71,15 @@ public class GameManager : MonoBehaviour
             if(cardsLeft == 2)
             {
                 Time.timeScale = 0;
+                audioSource.PlayOneShot(win, 0.5f);
+                audioManager.gameObject.SetActive(false);
                 endTxt.gameObject.SetActive(true);
             }
             cardsLeft -= 2;//남은 카드 장 수를 앞에 두면 아직 남아있는 두 장을 뒤집기도 전에 게임이 끝나버린다.            
         }
         else
         {
+            audioSource.PlayOneShot(missmatch, 0.5f);
             firstCard.GetComponent<card>().closeCard();
             secondCard.GetComponent<card>().closeCard();
         }
@@ -98,7 +108,11 @@ public class GameManager : MonoBehaviour
     }
     void GameEnd()
     {
+        if (hasplayed)
+            audioSource.PlayOneShot(lose, 0.25f);
+        hasplayed = false;
         Time.timeScale = 0f;
+        audioManager.gameObject.SetActive(false);
         endTxt.gameObject.SetActive(true);
     }
 
