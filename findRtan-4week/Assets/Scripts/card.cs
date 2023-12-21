@@ -9,13 +9,19 @@ public class card : MonoBehaviour
     GameObject back;
     AudioSource audioSource;
     [SerializeField] AudioClip flip;
+    bool isOpened = false;
+    [SerializeField] Color notOpenColor = Color.white;
+    [SerializeField] Color OpenedColor;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         front = transform.Find("front").gameObject;
         back = transform.Find("back").gameObject;
+        back.GetComponent<SpriteRenderer>().color = notOpenColor;
         audioSource = GetComponent<AudioSource>();
+
+        isOpened = false;
     }
     public void openCard()
     {
@@ -54,6 +60,12 @@ public class card : MonoBehaviour
     }
     void closeCardInvoke()
     {
+        if (isOpened == false)
+        {
+            back.GetComponent<SpriteRenderer>().color = OpenedColor;
+            isOpened = true;
+        }
+
         anim.SetBool("isOpen", false);
         transform.Find("back").gameObject.SetActive(true);
         transform.Find("front").gameObject.SetActive(false);
