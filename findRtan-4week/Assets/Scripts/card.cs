@@ -18,6 +18,10 @@ public class card : MonoBehaviour
     GameObject front;
     GameObject back;
     AudioSource audioSource;
+
+    SpriteRenderer spriteRenderer;
+    [SerializeField] Sprite[] sprites;
+
     [SerializeField] AudioClip flip;
     [SerializeField] AudioClip reFlip;
     bool isOpened = false;
@@ -36,6 +40,36 @@ public class card : MonoBehaviour
 
         isOpened = false;
     }
+
+    public void Setup(int index)
+    {
+        spriteRenderer = transform.Find("front").GetComponent<SpriteRenderer>();
+        switch (index)
+        {
+            case 0:
+            case 1:
+                WhosCard = WhosCard.Seungjun;
+                break;
+            case 2:
+            case 3:
+                WhosCard = WhosCard.Geon_o;
+                break;
+            case 4:
+            case 5:
+                WhosCard = WhosCard.Geonhyeong;
+                break;
+            case 6:
+                WhosCard = WhosCard.Jiyoon;
+                break;
+            case 7:
+                WhosCard = WhosCard.Ingyu;
+                break;
+        }
+        spriteRenderer.sprite = sprites[index];
+
+        Debug.Log(index);
+    }
+
     public void openCard()
     {
         audioSource.PlayOneShot(flip);

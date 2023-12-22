@@ -420,6 +420,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4542451fc2fd2d4bad5ad19392a2e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: aa594f95aab3310448f44be8ad7c951a, type: 3}
+  - {fileID: 21300000, guid: 11649793d6f2be042981227f5d45e2e8, type: 3}
+  - {fileID: 21300000, guid: 5ada3983fee2bd443b48b6d7c8bc00cc, type: 3}
+  - {fileID: 21300000, guid: 6dd1e3b42aaec5c41a57bdfcff86f62b, type: 3}
+  - {fileID: 21300000, guid: e20cf40a64ec3a34ca75766bfb567820, type: 3}
+  - {fileID: 21300000, guid: 10eff3a37c8a5c1499ce57ac4b4eec6f, type: 3}
+  - {fileID: 21300000, guid: c59bfa2f746e42b46ac6d6971402efdd, type: 3}
+  - {fileID: 21300000, guid: 3d0d8adc29caf624cb72e4877c90e15e, type: 3}
   flip: {fileID: 8300000, guid: 59579549fdd01e848ba0acfc89d817a7, type: 3}
   reFlip: {fileID: 8300000, guid: 2c2be72a4e88f9446a87a6d399c2df5f, type: 3}
   notOpenColor: {r: 1, g: 1, b: 1, a: 1}
