@@ -464,6 +464,7 @@ MonoBehaviour:
   missmatch: {fileID: 8300000, guid: 4a2e4f5f8e8237e4390c43a4b6cb519d, type: 3}
   win: {fileID: 8300000, guid: 5c12cedc9649db349b5476ccb941757e, type: 3}
   lose: {fileID: 8300000, guid: f0801a5289404684a8322e8f0cae34a2, type: 3}
+  cardCnt: 16
   cardFlipNotice: {fileID: 711337928}
   audioManager: {fileID: 260856517}
 --- !u!4 &711337926

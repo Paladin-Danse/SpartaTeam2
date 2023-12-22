@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioClip missmatch;
     [SerializeField] AudioClip win;
     [SerializeField] AudioClip lose;
-
+    [SerializeField] int cardCnt;
     [Header("# Notice")]
     [SerializeField] CardFlipNotice cardFlipNotice;
 
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
     bool hasplayed = true;
     float time;
     int cardsLeft;//'실제로' 남아있는 카드
+    Dictionary<int, card> cardDictionary;
     private void Awake()
     {
         Instance = this;
@@ -91,7 +93,7 @@ public class GameManager : MonoBehaviour
         else
         {
             audioSource.PlayOneShot(missmatch, 0.5f);
-            time += 10f; // 이부분 바꾸면 실패 패널티 조절
+            time += 0.5f; // 이부분 바꾸면 실패 패널티 조절
             firstCard.GetComponent<card>().closeCard();
             secondCard.GetComponent<card>().closeCard();
         }
@@ -136,6 +138,29 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         firstCard = secondCard = null;
+        List<int> rtans = new List<int>();
+
+        for (int i = 0; i < cardCnt / 2; i++)
+        {
+            rtans.Add(i);
+            rtans.Add(i);
+        }
+
+        rtans = rtans.OrderBy(item => UnityEngine.Random.Range(-1.0f, 1.0f)).ToList();
+
+        for (int i = 0; i < cardCnt; i++)
+        {
+            card newCard = Instantiate(card).GetComponent<card>();
+
+            newCard.transform.parent = cards.transform;
+            newCard.Setup(rtans[i]);
+
+            float x = (i / 4) * 1.4f - 2.1f;
+            float y = (i % 4) * 1.4f - 3.0f;
+            newCard.transform.position = new Vector3(x, y, 0);
+        }
+        
+        /*
         //배열 내용 랜덤하게 섞기. List에서도 써먹을 수 있을 거 같다.
         int[] rtans = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
         rtans = rtans.OrderBy(item => Random.Range(-1.0f, 1.0f)).ToArray();
@@ -154,6 +179,7 @@ public class GameManager : MonoBehaviour
             //newCard.transform.Find("front").GetComponent<SpriteRenderer>().sprite
             //    = Resources.Load<Sprite>(rtanName);
         }
+        */
         cardsLeft = cards.transform.childCount;
     }
     public void time20()

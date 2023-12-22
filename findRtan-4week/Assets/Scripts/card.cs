@@ -21,6 +21,7 @@ public class card : MonoBehaviour
 
     SpriteRenderer spriteRenderer;
     [SerializeField] Sprite[] sprites;
+    public Sprite[] getSprites { get { return sprites; } }
 
     [SerializeField] AudioClip flip;
     [SerializeField] AudioClip reFlip;
