@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class startBtn : MonoBehaviour
 {
-    public void gameStart(int diff)
+    public void gameStart()
     {
-        Difficulty.Diificulty = diff;
         SceneManager.LoadScene("MainScene");
     }
 }

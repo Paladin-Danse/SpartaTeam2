@@ -7,7 +7,6 @@ public class endTxt : MonoBehaviour
 {
     public void ReGame()
     {
-        Time.timeScale = 1;
-        SceneManager.LoadScene("StartScene");
+        SceneManager.LoadScene("MainScene");
     }
 }

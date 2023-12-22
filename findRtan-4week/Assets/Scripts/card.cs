@@ -19,7 +19,9 @@ public class card : MonoBehaviour
     GameObject back;
     AudioSource audioSource;
 
-    SpriteRenderer spriteRenderer;    
+    SpriteRenderer spriteRenderer;
+    [SerializeField] Sprite[] sprites;
+    public Sprite[] getSprites { get { return sprites; } }
 
     [SerializeField] AudioClip flip;
     [SerializeField] AudioClip reFlip;
@@ -43,39 +45,30 @@ public class card : MonoBehaviour
     public void Setup(int index)
     {
         spriteRenderer = transform.Find("front").GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = GameManager.Instance.sprites[index];
-
         switch (index)
         {
             case 0:
             case 1:
+                WhosCard = WhosCard.Seungjun;
+                break;
             case 2:
             case 3:
-                WhosCard = WhosCard.Seungjun;
+                WhosCard = WhosCard.Geon_o;
                 break;
             case 4:
             case 5:
-            case 6:
-            case 7:
-                WhosCard = WhosCard.Geon_o;
-                break;
-            case 8:
-            case 9:
-            case 10:
-            case 11:
                 WhosCard = WhosCard.Geonhyeong;
                 break;
-            case 12:
-            case 13:
-            case 14:
+            case 6:
                 WhosCard = WhosCard.Jiyoon;
                 break;
-            case 15:
-            case 16:
-            case 17:
+            case 7:
                 WhosCard = WhosCard.Ingyu;
                 break;
         }
+        spriteRenderer.sprite = sprites[index];
+
+        Debug.Log(index);
     }
 
     public void openCard()
