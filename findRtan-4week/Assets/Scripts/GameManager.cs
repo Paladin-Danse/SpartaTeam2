@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour
         else
         {
             audioSource.PlayOneShot(missmatch, 0.5f);
+            Time.timeScale++;
             firstCard.GetComponent<card>().closeCard();
             secondCard.GetComponent<card>().closeCard();
         }
