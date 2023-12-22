@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class CardFlipNotice : MonoBehaviour
 {
     [SerializeField] Text _noticeText;
+    [SerializeField] Text _tryCountText;
     [SerializeField] string[] _names;
-    
+
+    public int _tryCount;
+
     private void Start()
     {
         _noticeText.text = "";        
@@ -22,4 +25,9 @@ public class CardFlipNotice : MonoBehaviour
     }
 
     public void ResetText() => _noticeText.text = "";
+
+    public void TryCountNotice()
+    {
+        _tryCountText.text = $"½Ãµµ È½¼ö : {_tryCount} È¸";
+    }
 }

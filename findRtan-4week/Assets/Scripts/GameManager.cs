@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     public void isMatched()
     {
         bool isMatched = false;
+        cardFlipNotice._tryCount++;
 
         string firstCardImage = firstCard.transform.Find("front").GetComponent<SpriteRenderer>().sprite.name;
         string secondCardImage = secondCard.transform.Find("front").GetComponent<SpriteRenderer>().sprite.name;
@@ -82,13 +83,15 @@ public class GameManager : MonoBehaviour
                 audioSource.PlayOneShot(win, 0.5f);
                 audioManager.gameObject.SetActive(false);
                 endTxt.gameObject.SetActive(true);
+
+                cardFlipNotice.TryCountNotice();
             }
             cardsLeft -= 2;//남은 카드 장 수를 앞에 두면 아직 남아있는 두 장을 뒤집기도 전에 게임이 끝나버린다.            
         }
         else
         {
             audioSource.PlayOneShot(missmatch, 0.5f);
-            Time.timeScale++;
+            time += 10f; // 이부분 바꾸면 실패 패널티 조절
             firstCard.GetComponent<card>().closeCard();
             secondCard.GetComponent<card>().closeCard();
         }
@@ -125,6 +128,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         audioManager.gameObject.SetActive(false);
         endTxt.gameObject.SetActive(true);
+
+        cardFlipNotice.TryCountNotice();
     }
 
     public void InitGame()
