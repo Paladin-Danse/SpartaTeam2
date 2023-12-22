@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+
+public enum Diff
+{
+    Easy, Normal, Hard
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +26,9 @@ public class GameManager : MonoBehaviour
     [Header("# Notice")]
     [SerializeField] CardFlipNotice cardFlipNotice;
 
+    [SerializeField] Diff diff;
+    public Sprite[] sprites;    
+
     AudioSource audioSource;
     public AudioManager audioManager;
     GameObject firstCard = null;
@@ -35,10 +44,12 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        SetDifficult();
         cards = GameObject.Find("cards");
         audioSource = GetComponent<AudioSource>();
         audioSource.PlayOneShot(start, 0.5f);
         InitGame();
+        Debug.Log(Difficulty.Diificulty);
     }
 
     void Update()
@@ -50,14 +61,30 @@ public class GameManager : MonoBehaviour
             time20();
         }
 
-
-
         if (time >= 30.0f)
         {
-
             GameEnd();
         }
+    }
 
+    private void SetDifficult()
+    {
+        diff = (Diff)Difficulty.Diificulty;        
+        switch (diff)
+        {
+            case Diff.Easy:
+                Debug.Log("이지모드");
+                cardCnt = 4;
+                break;
+            case Diff.Normal:
+                Debug.Log("노멀모드");
+                cardCnt = 16;
+                break;
+            case Diff.Hard:
+                Debug.Log("하드모드");
+                cardCnt = 36;
+                break;
+        }
     }
 
     public void isMatched()
@@ -140,26 +167,8 @@ public class GameManager : MonoBehaviour
         firstCard = secondCard = null;
         List<int> rtans = new List<int>();
 
-        for (int i = 0; i < cardCnt / 2; i++)
-        {
-            rtans.Add(i);
-            rtans.Add(i);
-        }
+        SpawnCards();
 
-        rtans = rtans.OrderBy(item => UnityEngine.Random.Range(-1.0f, 1.0f)).ToList();
-
-        for (int i = 0; i < cardCnt; i++)
-        {
-            card newCard = Instantiate(card).GetComponent<card>();
-
-            newCard.transform.parent = cards.transform;
-            newCard.Setup(rtans[i]);
-
-            float x = (i / 4) * 1.4f - 2.1f;
-            float y = (i % 4) * 1.4f - 3.0f;
-            newCard.transform.position = new Vector3(x, y, 0);
-        }
-        
         /*
         //배열 내용 랜덤하게 섞기. List에서도 써먹을 수 있을 거 같다.
         int[] rtans = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
@@ -182,12 +191,51 @@ public class GameManager : MonoBehaviour
         */
         cardsLeft = cards.transform.childCount;
     }
+
+    private void SpawnCards()
+    {
+        List<int> rtans = new List<int>();
+
+        for (int i = 0; i < cardCnt / 2; i++)
+        {
+            int random = -1;
+            while (true)
+            {
+                random = UnityEngine.Random.Range(0, sprites.Length);
+                if (rtans.Any(x => x == random))
+                    continue;
+
+                break;
+            }            
+
+            rtans.Add(random);
+            rtans.Add(random);
+        }
+
+        rtans = rtans.OrderBy(item => UnityEngine.Random.Range(-1.0f, 1.0f)).ToList();
+
+        int raw = (int)Mathf.Sqrt(cardCnt);        
+        for (int y = 0; y < raw; y++)
+        {
+            for (int x = 0; x < raw; x++)
+            {
+                card newCard = Instantiate(card).GetComponent<card>();
+                newCard.transform.parent = cards.transform;
+                newCard.Setup(rtans[y * raw + x]);
+
+                float offset = 1.5f;
+                float startAnchor = offset * (raw / 2) - 0.75f;
+
+                float posX = -startAnchor + offset * x;
+                float posY = startAnchor - offset * y;
+
+                newCard.transform.position = new Vector3(posX, posY, 0);
+            }            
+        }        
+    }
+
     public void time20()
     {
-
         timeTxt.text = "<color=#FF4C33>" + timeTxt.text + "</color>";
-
-
-
     }
 }
