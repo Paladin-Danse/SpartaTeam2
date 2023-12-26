@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     GameObject firstCard = null;
     GameObject secondCard = null;
     GameObject cards;
+    public GameObject tile;
     bool hasplayed = true;
     float time;
     int cardsLeft;//'실제로' 남아있는 카드
@@ -219,8 +220,10 @@ public class GameManager : MonoBehaviour
         {
             for (int x = 0; x < raw; x++)
             {
+                GameObject newtile = Instantiate(tile);
+                newtile.transform.parent = cards.transform;                
                 card newCard = Instantiate(card).GetComponent<card>();
-                newCard.transform.parent = cards.transform;
+                newCard.transform.parent = newtile.transform;
                 newCard.Setup(rtans[y * raw + x]);
 
                 float offset = 1.5f;
@@ -229,7 +232,7 @@ public class GameManager : MonoBehaviour
                 float posX = -startAnchor + offset * x;
                 float posY = startAnchor - offset * y;
 
-                newCard.transform.position = new Vector3(posX, posY, 0);
+                newtile.transform.position = new Vector3(posX, posY, 0);
             }            
         }        
     }
