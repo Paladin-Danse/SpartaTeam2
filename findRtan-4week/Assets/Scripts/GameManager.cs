@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using System.Linq;
 using System;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using UnityEngine.UIElements;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public enum Diff
 {
@@ -25,18 +27,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] int cardCnt;
     [Header("# Notice")]
     [SerializeField] CardFlipNotice cardFlipNotice;
-
+    float time1 = 0;
     [SerializeField] Diff diff;
-    public Sprite[] sprites;    
-
+    public Sprite[] sprites;
+    public GameObject endPanel;
     AudioSource audioSource;
     public AudioManager audioManager;
     GameObject firstCard = null;
     GameObject secondCard = null;
     GameObject cards;
     public GameObject tile;
+    public Text ScoreTxt;
     bool hasplayed = true;
     float time;
+    float bestscore = 0;
     int cardsLeft;//'실제로' 남아있는 카드
     Dictionary<int, card> cardDictionary;
     private void Awake()
@@ -56,6 +60,21 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
+        if (firstCard != null)
+
+        {
+            time1 += Time.deltaTime;
+            if (time1 > 5)
+            {
+                firstCard.GetComponent<card>().closeCard1();
+                firstCard = null;
+                time1 = 0;
+            }
+
+
+        }
+        bestscore -= Time.deltaTime;
+
         timeTxt.text = time.ToString("N2");
         if (time >= 20.0f)
         {
@@ -104,6 +123,7 @@ public class GameManager : MonoBehaviour
 
             firstCard.GetComponent<card>().destroyCard();
             secondCard.GetComponent<card>().destroyCard();
+            bestscore += 7;
 
             //카드가 사라지기까지 1초의 시간이 걸린다. 또한 두 장만 남았어도 뒤집기 전까진 끝난게 아니다.
             //그러므로 카드가 뒤집어져 확정이 난 순간 카드는 두장이 남아있다.
@@ -113,8 +133,10 @@ public class GameManager : MonoBehaviour
                 audioSource.PlayOneShot(win, 0.5f);
                 audioManager.gameObject.SetActive(false);
                 endTxt.gameObject.SetActive(true);
-
+                endPanel.SetActive(true);
                 cardFlipNotice.TryCountNotice();
+                ScoreTxt.text = bestscore.ToString("N2");
+
             }
             cardsLeft -= 2;//남은 카드 장 수를 앞에 두면 아직 남아있는 두 장을 뒤집기도 전에 게임이 끝나버린다.            
         }
@@ -124,6 +146,7 @@ public class GameManager : MonoBehaviour
             time += 0.5f; // 이부분 바꾸면 실패 패널티 조절
             firstCard.GetComponent<card>().closeCard();
             secondCard.GetComponent<card>().closeCard();
+            bestscore -= 5;
         }
         cardFlipNotice.MatchCheck(isMatched, firstCard.GetComponent<card>().WhosCard);
         firstCard = secondCard = null;
@@ -158,8 +181,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         audioManager.gameObject.SetActive(false);
         endTxt.gameObject.SetActive(true);
-
+        endPanel.SetActive(true);
         cardFlipNotice.TryCountNotice();
+        ScoreTxt.text = bestscore.ToString("N2");
     }
 
     public void InitGame()

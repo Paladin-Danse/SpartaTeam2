@@ -113,6 +113,10 @@ public class card : MonoBehaviour
     {
         Invoke("closeCardInvoke", 1.0f);
     }
+    public void closeCard1()
+    {
+        closeCardInvoke();
+    }
     void closeCardInvoke()
     {
         if (isOpened == false)
