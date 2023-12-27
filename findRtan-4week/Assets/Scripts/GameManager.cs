@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     [SerializeField] Text timeTxt;
     [SerializeField] Text endTxt;
+    [SerializeField] Text easyBestTimeTxt;
+    [SerializeField] Text normalBestTimeTxt;
+    [SerializeField] Text hardBestTimeTxt;
     [SerializeField] GameObject card;
     [SerializeField] AudioClip start;
     [SerializeField] AudioClip match;
@@ -41,6 +44,16 @@ public class GameManager : MonoBehaviour
     bool hasplayed = true;
     float time;
     float bestscore = 0;
+
+    [SerializeField] GameObject Easy;
+    [SerializeField] GameObject Normal;
+    [SerializeField] GameObject Hard;
+
+    //float bestTime = 30f;
+    //float easyBestTime = 30f;
+    //float normalBestTime = 30f;
+    //float hardBestTime = 30f;
+
     int cardsLeft;//'실제로' 남아있는 카드
     Dictionary<int, card> cardDictionary;
     private void Awake()
@@ -55,10 +68,34 @@ public class GameManager : MonoBehaviour
         audioSource.PlayOneShot(start, 0.5f);
         InitGame();
         Debug.Log(Difficulty.Diificulty);
+        
     }
 
     void Update()
     {
+        switch (diff)
+        {
+            case Diff.Easy:
+                if(PlayerPrefs.HasKey("easyBestTime") == true)
+                    easyBestTimeTxt.text = "최단 시간 : " + PlayerPrefs.GetFloat("easyBestTime").ToString("N2") + "초";
+                else
+                    easyBestTimeTxt.text = "없음";
+                break;
+            case Diff.Normal:
+                if (PlayerPrefs.HasKey("normalBestTime") == true)
+                    normalBestTimeTxt.text = "최단 시간 : " + PlayerPrefs.GetFloat("normalBestTime").ToString("N2") + "초";
+                else
+                    normalBestTimeTxt.text = "없음";
+                break;
+            case Diff.Hard:
+                if (PlayerPrefs.HasKey("hardBestTime") == true)
+                    hardBestTimeTxt.text = "최단 시간 : " + PlayerPrefs.GetFloat("hardBestTime").ToString("N2") + "초";
+                else
+                    hardBestTimeTxt.text = "없음";
+                break;
+        }
+        //bestTimeTxt.text = "최단 시간 : " + PlayerPrefs.GetFloat("bestTime").ToString("N2") + "초";
+
         time += Time.deltaTime;
         if (firstCard != null)
 
@@ -129,6 +166,9 @@ public class GameManager : MonoBehaviour
             //그러므로 카드가 뒤집어져 확정이 난 순간 카드는 두장이 남아있다.
             if (cardsLeft == 2)
             {
+                if (diff == Diff.Easy) PlayerPrefs.SetInt("easyClear", 1);
+                else if (diff == Diff.Normal) PlayerPrefs.SetInt("normalClear", 1);
+
                 Time.timeScale = 0;
                 audioSource.PlayOneShot(win, 0.5f);
                 audioManager.gameObject.SetActive(false);
@@ -136,7 +176,49 @@ public class GameManager : MonoBehaviour
                 endPanel.SetActive(true);
                 cardFlipNotice.TryCountNotice();
                 ScoreTxt.text = bestscore.ToString("N2");
+                /*if (PlayerPrefs.GetFloat("bestTime") > time)
+                {
+                    PlayerPrefs.SetFloat("bestTime", time);
+                }*/              
+                switch (diff)
+                {
+                    case Diff.Easy:
+                        Debug.Log("xxx");
+                        if (PlayerPrefs.HasKey("easyBestTime") == false)
+                        {
+                            PlayerPrefs.SetFloat("easyBestTime", 30f);
+                        }
+                        else
+                        {
+                            if (PlayerPrefs.GetFloat("easyBestTime") > time || PlayerPrefs.GetFloat("easyBestTime") == 0f)
+                                PlayerPrefs.SetFloat("easyBestTime", time);
+                        }
+                        break;
+                    case Diff.Normal:
+                        if (PlayerPrefs.HasKey("normalBestTime") == false)
+                        {
+                            PlayerPrefs.SetFloat("normalBestTime", 30f);
 
+                        }
+                        else
+                        {
+                            if (PlayerPrefs.GetFloat("normalBestTime") > time || PlayerPrefs.GetFloat("normalBestTime") == 0f)
+                                PlayerPrefs.SetFloat("normalBestTime", time);
+                        }
+                        break;
+                    case Diff.Hard:
+                        if (PlayerPrefs.HasKey("hardBestTime") == false)
+                        {
+                            PlayerPrefs.SetFloat("hardBestTime", 30f);
+
+                        }
+                        else
+                        {
+                            if (PlayerPrefs.GetFloat("hardBestTime") > time || PlayerPrefs.GetFloat("hardBestTime") == 0f)
+                                PlayerPrefs.SetFloat("hardBestTime", time);
+                        }
+                        break;
+                }
             }
             cardsLeft -= 2;//남은 카드 장 수를 앞에 두면 아직 남아있는 두 장을 뒤집기도 전에 게임이 끝나버린다.            
         }
@@ -150,6 +232,7 @@ public class GameManager : MonoBehaviour
         }
         cardFlipNotice.MatchCheck(isMatched, firstCard.GetComponent<card>().WhosCard);
         firstCard = secondCard = null;
+        time1 = 0;
     }
     //firstCard에 값이 들어있는가? = 첫번째카드를 집은 상태냐?
     public bool checkFirst()
