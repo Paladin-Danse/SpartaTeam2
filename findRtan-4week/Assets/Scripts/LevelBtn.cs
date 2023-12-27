@@ -8,6 +8,10 @@ public class LevelBtn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InitGame();
+    }
+    public void InitGame()
+    {
         switch (diff)
         {
             case Diff.Normal:
@@ -30,10 +34,5 @@ public class LevelBtn : MonoBehaviour
                 }
                 break;
         }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

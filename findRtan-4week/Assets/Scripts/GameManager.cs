@@ -186,35 +186,33 @@ public class GameManager : MonoBehaviour
                         Debug.Log("xxx");
                         if (PlayerPrefs.HasKey("easyBestTime") == false)
                         {
-                            PlayerPrefs.SetFloat("easyBestTime", 30f);
+                            PlayerPrefs.SetFloat("easyBestTime", time);
                         }
                         else
                         {
-                            if (PlayerPrefs.GetFloat("easyBestTime") > time || PlayerPrefs.GetFloat("easyBestTime") == 0f)
+                            if (PlayerPrefs.GetFloat("easyBestTime") > time)
                                 PlayerPrefs.SetFloat("easyBestTime", time);
                         }
                         break;
                     case Diff.Normal:
                         if (PlayerPrefs.HasKey("normalBestTime") == false)
                         {
-                            PlayerPrefs.SetFloat("normalBestTime", 30f);
-
+                            PlayerPrefs.SetFloat("normalBestTime", time);
                         }
                         else
                         {
-                            if (PlayerPrefs.GetFloat("normalBestTime") > time || PlayerPrefs.GetFloat("normalBestTime") == 0f)
+                            if (PlayerPrefs.GetFloat("normalBestTime") > time)
                                 PlayerPrefs.SetFloat("normalBestTime", time);
                         }
                         break;
                     case Diff.Hard:
                         if (PlayerPrefs.HasKey("hardBestTime") == false)
                         {
-                            PlayerPrefs.SetFloat("hardBestTime", 30f);
-
+                            PlayerPrefs.SetFloat("hardBestTime", time);
                         }
                         else
                         {
-                            if (PlayerPrefs.GetFloat("hardBestTime") > time || PlayerPrefs.GetFloat("hardBestTime") == 0f)
+                            if (PlayerPrefs.GetFloat("hardBestTime") > time)
                                 PlayerPrefs.SetFloat("hardBestTime", time);
                         }
                         break;
